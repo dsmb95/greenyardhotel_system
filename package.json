@@ -1,0 +1,27 @@
+{
+  "name": "greenyardhotel_system",
+  "version": "1.0.0",
+  "description": "A full stack web application to handle operational workflows for Green Yard Hotel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -k -n SERVER,CLIENT \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "db:setup": "npm --prefix server run db:setup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsmb95/greenyardhotel_system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dsmb95/greenyardhotel_system/issues"
+  },
+  "homepage": "https://github.com/dsmb95/greenyardhotel_system#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
