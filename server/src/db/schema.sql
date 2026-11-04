@@ -30,7 +30,7 @@ CREATE TALBE users (
 ----------------------------------------------------------------
 CREATE TABLE room_type (
     type VARCHAR(40) PRIMARY KEY,
-    price DECIMAL(10,0) NOT NULL
+    price DECIMAL(10,2) NOT NULL
 );
 
 ----------------------------------------------------------------
@@ -63,19 +63,10 @@ CREATE TABLE coupon (
 );
 
 ----------------------------------------------------------------
--- Payment Type (cash, credit, debit, cheque)
-----------------------------------------------------------------
-CREATE TABLE payment_type (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(40) NOT NULL
-);
-
-----------------------------------------------------------------
--- Transaction Addons Types
+-- Transaction Addons Types (extra charges)
 ----------------------------------------------------------------
 CREATE TABLE transaction_addons_types (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(60) NOT NULL,
+    name VARCHAR(60) PRIMARY KEY,
     price DECIMAL(10,2) NOT NULL
 );
 
@@ -105,9 +96,9 @@ CREATE TABLE transaction_table (
 CREATE TABLE pax_transaction (
     id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NOT NULL,
-    addon_type_id INT NOT NULL,
+    gender ENUM ('Male', 'Female', 'Other') NOT NULL,
+    nationality VARCHAR(60) NOT NULL,
     FOREIGN KEY (transaction_id) REFERENCES transaction_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (addon_type_id) REFERENCES transactions_addons_types(id)
 );
 
 ----------------------------------------------------------------
@@ -116,9 +107,9 @@ CREATE TABLE pax_transaction (
 CREATE TABLE transaction_addons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NOT NULL,
-    addon_type_id INT NOT NULL,
+    addon_name VARCHAR(60) NOT NULL,
     FOREIGN KEY (transactions_id) REFERENCES transaction_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (addon_type_id) REFERENCES transaction_addons_types(id)
+    FOREIGN KEY (addon_name) REFERENCES transaction_addons_types(name)
 );
 
 ----------------------------------------------------------------
@@ -127,11 +118,10 @@ CREATE TABLE transaction_addons (
 CREATE TABLE payment (
     id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NOT NULL,
-    payment_type_id INT NOT NULL,
+    payment_type ENUM ('Cash', 'Card', 'E-Transfer', 'Cheque'),
     amount DECIMAL (10,2) NOT NULL,
     paid_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (transaction_id) REFERENCES transaction_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (payment_type_id) REFERENCES payment_type(id)
 );
 
 ----------------------------------------------------------------
