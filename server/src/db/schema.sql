@@ -18,7 +18,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 ----------------------------------------------------------------
 -- Users (front desk staff & admin / login)
 ----------------------------------------------------------------
-CREATE TALBE users (
+CREATE TABLE users (
     username VARCHAR(50) PRIMARY KEY,
     full_name VARCHAR(120) NOT NULL,
     password VARCHAR(255) NOT NULL,
