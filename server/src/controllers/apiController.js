@@ -51,6 +51,23 @@ export const deleteRoom = async (req, res) => {
     res.status(204).end();
 }
 
+// -------------------------------------------------------------------
+// Room Types
+// -------------------------------------------------------------------
+export const listRoomTypes = async(req, res) => res.json({ roomTypes: await RoomType.all() });
+export const createRoomType = async(req, res) => {
+    const r = await RoomType.create(req.body);
+    res.status(201).json(r);
+};
+export const updateRoomType = async(req, res) => {
+    const r = await RoomType.update(req.params.type, req.body.price);
+    return r ? res.json(r) : res.status(404).json({ error: "Room type not found" });
+};
+export const deleteRoomType = async(req, res) => {
+    await RoomType.remove(req.params.type);
+    res.status(204).end();
+};
+
 // --------------------------------------------------------------
 // Coupons / Payment Types / Addons
 // --------------------------------------------------------------
